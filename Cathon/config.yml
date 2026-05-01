@@ -1,0 +1,14 @@
+system:
+  name: Cathon
+  version: 1.0.0
+  engine: brython
+
+runtime:
+  log: true
+  auto_reload: false
+  theme: terminal
+
+permission:
+  read: true
+  write: false
+  network: false

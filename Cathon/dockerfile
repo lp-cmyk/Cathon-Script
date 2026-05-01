@@ -1,0 +1,14 @@
+FROM gcc:latest
+
+RUN apt-get update && apt-get install -y \
+    python3 \
+    default-jre \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY . .
+
+RUN g++ boot.cpp -o boot -std=c++11 -pthread
+
+EXPOSE 8000
+CMD ["./boot"]

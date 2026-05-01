@@ -1,0 +1,15 @@
+{
+  "system": {
+    "version": "1.0.0",
+    "language": "cathon",
+    "support": ["ca", "cac", "cacw"]
+  },
+  "ui": {
+    "theme": "terminal",
+    "color": "green"
+  },
+  "permission": {
+    "read_file": true,
+    "write_file": false
+  }
+}

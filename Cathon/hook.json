@@ -1,0 +1,6 @@
+{
+  "on_start": "sys.ca",
+  "before_run": "lib.cac",
+  "after_run": "win.cacw",
+  "on_exit": "cleanup.ca"
+}

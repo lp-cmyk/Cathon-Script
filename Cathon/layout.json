@@ -1,0 +1,12 @@
+{
+  "layout": "terminal",
+  "panels": [
+    "code_area",
+    "terminal_output",
+    "toolbar"
+  ],
+  "sizes": {
+    "code": 240,
+    "terminal": "auto"
+  }
+}

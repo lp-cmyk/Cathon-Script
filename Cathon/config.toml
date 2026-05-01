@@ -1,0 +1,13 @@
+[system]
+name = "Cathon"
+version = "1.0.0"
+author = "You"
+
+[ui]
+background = "#000000"
+color = "#00ff00"
+font = "Consolas"
+
+[run]
+allow_file_access = true
+show_terminal = true

@@ -1,0 +1,15 @@
+{
+  "local_file": {
+    "read": true,
+    "write": false,
+    "delete": false
+  },
+  "network": {
+    "fetch": false,
+    "websocket": false
+  },
+  "system": {
+    "shell": false,
+    "process": false
+  }
+}

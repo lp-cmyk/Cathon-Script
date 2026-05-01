@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Cathon Script</title>
+<style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#000;color:#0f0;font-family:Consolas,monospace}
+    .bar{display:flex;gap:8px;padding:8px;background:#111}
+    #newline{background:#222;color:#0f0;border:1px solid #0f0;padding:4px 10px}
+    #run{background:#003300;color:#0f0;border:1px solid #0f0;padding:4px 10px}
+    #file{color:#0f0;background:#000;border:1px solid #0f0}
+    #code{width:100%;height:240px;background:#000;color:#0f0;border:1px solid #0f0;padding:10px}
+    #term{width:100%;height:calc(100vh - 300px);border:1px solid #0f0;padding:10px;overflow-y:auto}
+</style>
+</head>
+<body>
+<div class="bar">
+  <button id="newline">Enter</button>
+  <button id="run">run Cathon</button>
+  <input type="file" id="file" accept=".ca,.cac,.cacw">
+</div>
+<textarea id="code" placeholder="There input or load .ca file"></textarea>
+<div id="term"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
+
+<script type="text/javascript">
+    require = window.require;
+    brython = window.brython;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const code_area = document.getElementById('code');
+        const term = document.getElementById('term');
+        const btn_newline = document.getElementById('newline');
+        const btn_run = document.getElementById('run');
+        const file_input = document.getElementById('file');
+
+        function println(s) {
+            term.innerHTML += s + "<br>";
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function clear_term() {
+            term.innerHTML = "";
+        }
+
+      btn_newline.addEventListener('click', function() {
+            code_area.value += "\n";
+            code_area.focus();
+        });
+
+       btn_run.addEventListener('click', function() {
+            clear_term();
+            const code = code_area.value.trim();
+            const lines = code.split(/\r?\n/);
+            let in_block = false;
+            let pwd = null;
+
+            for (let line of lines) {
+                line = line.trim();
+                if (!line || line.startsWith("//")) continue;
+                
+                if (line === "§including") {
+                    in_block = true;
+                    continue;
+                }
+                if (line === "#§including") {
+                    in_block = false;
+                    continue;
+                }
+                if (!in_block) continue;
+
+                if (line.startsWith("a=input(")) {
+                    println("[输入密码]");
+                    pwd = prompt("请输入密码：");
+                } 
+                else if (line.startsWith("if a :")) {
+                    const target = line.split("'")[1];
+                    if (pwd === target) {
+                        println("Correct");
+                    } else {
+                        println("Error");
+                    }
+                }
+            }
+            println("\n=== 运行完成 ===");
+        });
+
+          file_input.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                code_area.value = e.target.result;
+            };
+            reader.readAsText(file);
+        });
+        
+        brython();
+    });
+</script>
+</body>
+</html>
